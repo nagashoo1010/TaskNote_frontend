@@ -40,7 +40,6 @@ function App() {
 
   // タスク追加処理
   const addTask = async () => {
-    setLoading(true);
     try {
       const res = await axios.post(`http://localhost:80/api/tasks`, { task: text });
       console.log(res.data);
@@ -48,7 +47,6 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-    setLoading(false);
     setText("");
   };
 
