@@ -35,6 +35,7 @@ function App() {
     } catch (error) {
       console.log(error);
     }
+    setTaskId("");
   };
 
   // タスク追加処理
@@ -101,11 +102,14 @@ function App() {
         <input type="text" value={taskId} onChange={(e) => setTaskId(e.target.value)} />
         <button onClick={searchTask}>タスク選択</button>
         <h4>
-          {
+          {selectTask && (
             <p>
               {selectTask.id} {selectTask.task}
+              <button onClick={() => updateTask(selectTask.id)}>更新</button>
+              <button onClick={() => deleteTask(selectTask.id)}>削除</button>
+              <button onClick={() => setSelectTask("")}>リセット</button>
             </p>
-          }
+          )}
         </h4>
       </div>
     </>
