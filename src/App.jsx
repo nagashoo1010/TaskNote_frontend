@@ -83,7 +83,12 @@ function App() {
   return (
     <>
       <div>
-        <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
+        <input
+          type="text"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="追加するタスクを入力してください"
+        />
         <button onClick={addTask}>追加</button>
 
         <ul>
@@ -97,7 +102,12 @@ function App() {
                 </li>
               ))}
         </ul>
-        <input type="text" value={taskId} onChange={(e) => setTaskId(e.target.value)} />
+        <input
+          type="text"
+          value={taskId}
+          onChange={(e) => setTaskId(e.target.value)}
+          placeholder="idを入力してください"
+        />
         <button onClick={searchTask}>タスク選択</button>
         <h4>
           {selectTask && (
@@ -105,7 +115,7 @@ function App() {
               {selectTask.id} {selectTask.task}
               <button onClick={() => updateTask(selectTask.id)}>更新</button>
               <button onClick={() => deleteTask(selectTask.id)}>削除</button>
-              <button onClick={() => setSelectTask("")}>リセット</button>
+              <button onClick={() => setSelectTask("")}>非表示</button>
             </p>
           )}
         </h4>
