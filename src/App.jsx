@@ -6,6 +6,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [text, setText] = useState("");
   const [taskId, setTaskId] = useState("");
+  const [description, setDescription] = useState("");
   const [selectTask, setSelectTask] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -39,9 +40,12 @@ function App() {
   };
 
   // タスク追加処理
-  const addTask = async () => {
+  const addTask = async (e) => {
+    e.preventDefault();
+    console.log(setTasks);
+    // console.log(setDescription);
     try {
-      const res = await axios.post(`http://localhost:80/api/tasks`, { task: text });
+      const res = await axios.post(`http://localhost:80/api/tasks`, { task: text, description: description });
       console.log(res.data);
       setTasks([res.data, ...tasks]);
     } catch (error) {
@@ -83,13 +87,21 @@ function App() {
   return (
     <>
       <div>
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="追加するタスクを入力してください"
-        />
-        <button onClick={addTask}>追加</button>
+        <form>
+          <input
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="追加するタスクを入力してください"
+          />
+          <textarea
+            type="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="詳細を入力してください"
+          />
+          <button onClick={addTask}>追加</button>
+        </form>
 
         <ul>
           {loading
