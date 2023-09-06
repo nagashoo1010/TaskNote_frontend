@@ -112,6 +112,7 @@ function App() {
                   {task.id}:{task.task}
                   <button onClick={() => updateTask(task.id)}>更新</button>
                   <button onClick={() => deleteTask(task.id)}>削除</button>
+                  <p>{task.description}</p>
                 </li>
               ))}
         </ul>
