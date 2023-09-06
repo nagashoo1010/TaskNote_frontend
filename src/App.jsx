@@ -42,8 +42,6 @@ function App() {
   // タスク追加処理
   const addTask = async (e) => {
     e.preventDefault();
-    console.log(setTasks);
-    // console.log(setDescription);
     try {
       const res = await axios.post(`http://localhost:80/api/tasks`, { task: text, description: description });
       console.log(res.data);
@@ -130,7 +128,8 @@ function App() {
               {selectTask.id} {selectTask.task}
               <button onClick={() => updateTask(selectTask.id)}>更新</button>
               <button onClick={() => deleteTask(selectTask.id)}>削除</button>
-              <button onClick={() => setSelectTask("")}>非表示</button>
+              <button onClick={() => setSelectTask("")}>✖︎</button>
+              <p>{selectTask.description}</p>
             </p>
           )}
         </h4>
