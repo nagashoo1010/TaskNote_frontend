@@ -52,6 +52,7 @@ function App() {
       console.log(error);
     }
     setText("");
+    setDescription("");
   };
 
   // タスク更新処理
