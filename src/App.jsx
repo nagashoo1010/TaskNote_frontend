@@ -164,6 +164,7 @@ function App() {
               <button onClick={() => deleteTask(selectTask.id)}>削除</button>
               <button onClick={() => setSelectTask("")}>✖︎</button>
               <p>{selectTask.description}</p>
+              <img style={taskImg} src={selectTask.image_path} alt="Task Image" />
             </p>
           )}
         </h4>
