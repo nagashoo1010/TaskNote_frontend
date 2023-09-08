@@ -7,6 +7,7 @@ function App() {
   const [text, setText] = useState("");
   const [taskId, setTaskId] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
   const [selectTask, setSelectTask] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -42,15 +43,30 @@ function App() {
   // タスク追加処理
   const addTask = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("task", text);
+    formData.append("description", description);
+    formData.append("image", image);
+
     try {
-      const res = await axios.post(`http://localhost:80/api/tasks`, { task: text, description: description });
-      console.log(res.data);
+      const res = await axios.post(`http://localhost:80/api/tasks`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // console.log(res.data);
       setTasks([res.data, ...tasks]);
     } catch (error) {
       console.log(error);
     }
     setText("");
     setDescription("");
+  };
+
+  const handleFileChange = (event) => {
+    setImage(event.target.files[0]);
   };
 
   // タスク更新処理
@@ -83,9 +99,23 @@ function App() {
     }
   };
 
+  const taskArea = {
+    width: "800px",
+  };
+
+  const taskImg = {
+    width: "180px",
+    height: "160px",
+  };
+
+  const taskItems = {
+    display: "flex",
+    justifyContent: "center",
+  };
+
   return (
     <>
-      <div>
+      <div style={taskArea}>
         <form>
           <input
             type="text"
@@ -99,6 +129,7 @@ function App() {
             onChange={(e) => setDescription(e.target.value)}
             placeholder="詳細を入力してください"
           />
+          <input type="file" onChange={handleFileChange} />
           <button onClick={addTask}>追加</button>
         </form>
 
@@ -106,12 +137,15 @@ function App() {
           {loading
             ? "Loading..."
             : tasks.map((task) => (
-                <li key={task.id}>
-                  <input type="checkbox" />
-                  {task.id}:{task.task}
-                  <button onClick={() => updateTask(task.id)}>更新</button>
-                  <button onClick={() => deleteTask(task.id)}>削除</button>
-                  <p>{task.description}</p>
+                <li key={task.id} style={taskItems}>
+                  <div>
+                    <input type="checkbox" />
+                    {task.id}:{task.task}
+                    <button onClick={() => updateTask(task.id)}>更新</button>
+                    <button onClick={() => deleteTask(task.id)}>削除</button>
+                    <p>{task.description}</p>
+                  </div>
+                  <img style={taskImg} src={task.image_path} alt="Task Image" />
                 </li>
               ))}
         </ul>
